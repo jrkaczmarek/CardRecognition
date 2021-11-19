@@ -2,11 +2,18 @@ import cv2
 import time
 import preprocess
 import constants
-
 from helper import stackImages
+from tensorflow import keras
+import numpy as np
 
+to_values = {0: '2', 1: '3', 2: '4', 3: '5', 4: '6', 5: '7', 6: '8', 7: '9', 8: '10', 9: 'a', 10: 'j', 11: 'k', 12: 'q'}
+to_colors = {0: 'club', 1: 'diamond', 2: 'heart', 3: 'spade'}
 
 def capture():
+    # loading neural network
+    v_model = keras.models.load_model('./values_trained')
+    c_model = keras.models.load_model('./colors_trained')
+
     # Settings
     cap = cv2.VideoCapture(constants.INTEGRATED_CAMERA)
     cap.set(3, constants.FRAME_WIDTH)
@@ -48,6 +55,21 @@ def capture():
             # show the overall image
             cv2.imshow('Result', stackImages(0.85, [imgResult, thresh]))
             if value_color_mapping:
+                value_im = np.array([value_color_mapping[0][0]])
+                color_im = np.array([value_color_mapping[0][1]])
+
+                value_im = value_im.reshape((value_im.shape[0], value_im.shape[1], 1))
+                color_im = color_im.reshape((color_im.shape[0], color_im.shape[1], 1))
+
+                value_result = v_model.predict(np.array[value_im])
+                color_result = c_model.predict(np.array[color_im])
+
+                value = to_values[np.argmax(value_result)]
+                color = to_colors[np.argmax(color_result)]
+
+                print("WYKRYTO")
+                #print('VALUE: ', value, 'COLOR:', color)
+
                 cv2.imshow('Number', value_color_mapping[0][0])
                 cv2.imshow('Color', value_color_mapping[0][1])
 
