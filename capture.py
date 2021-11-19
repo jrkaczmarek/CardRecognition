@@ -55,14 +55,14 @@ def capture():
             # show the overall image
             cv2.imshow('Result', stackImages(0.85, [imgResult, thresh]))
             if value_color_mapping:
-                value_im = np.array([value_color_mapping[0][0]])
-                color_im = np.array([value_color_mapping[0][1]])
+                value_im = np.array([value_color_mapping[0][0]])/255
+                color_im = np.array([value_color_mapping[0][1]])/255
 
-                value_im = value_im.reshape((value_im.shape[0], value_im.shape[1], 1))
-                color_im = color_im.reshape((color_im.shape[0], color_im.shape[1], 1))
+                value_im = value_im.reshape((1, value_im.shape[0], value_im.shape[1], 1))
+                color_im = color_im.reshape((1, color_im.shape[0], color_im.shape[1], 1))
 
-                value_result = v_model.predict(np.array[value_im])
-                color_result = c_model.predict(np.array[color_im])
+                value_result = v_model.predict(value_im)
+                color_result = c_model.predict(color_im)
 
                 value = to_values[np.argmax(value_result)]
                 color = to_colors[np.argmax(color_result)]
