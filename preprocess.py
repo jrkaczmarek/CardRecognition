@@ -32,7 +32,7 @@ def find_corners(processed, original, draw=False):
     argument2 (image): Original image of card
 
     Returns:
-    list: Card corners
+    list: Card corners set
 
     """
 
@@ -122,7 +122,7 @@ def crop_left_corner(flattened_images):
     argument1 (list): Flattened images of cards
 
     Returns:
-    list: Images of left card corner
+    list: Images of left cards corners
 
     """
 
@@ -151,7 +151,7 @@ def split_value_and_color(cropped_images):
     argument1 (list): Cropped images of cards
 
     Returns:
-    list: Images of value and color of card
+    list: Images of value and color of cards
 
     """
     value_color_mapping = []
