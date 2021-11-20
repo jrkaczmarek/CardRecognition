@@ -36,6 +36,24 @@ def recognize(value_color_mapping, v_model, c_model, show=False):
 
     return pred
 
+
+def show_text(pred, corners, img):
+    for i in range(0, len(pred)):
+        # figure out where to place the text
+        c = np.array(corners[i])
+        corners_flat = c.reshape(-1, c.shape[-1])
+        startX = corners_flat[0][0] + 0
+        halfY = corners_flat[0][1] - 50
+        pred_list = pred[i].split('\n')
+
+        font = cv2.FONT_HERSHEY_COMPLEX
+        gap = 0
+        # show the text
+        for j in pred_list:
+            cv2.putText(img, j, (startX, halfY + gap), font, 0.8, (50, 205, 50), 2, cv2.LINE_AA)
+            gap += 30
+
+
 def capture():
     # loading neural network
     v_model = keras.models.load_model('./values_trained')
