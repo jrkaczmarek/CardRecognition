@@ -60,7 +60,7 @@ def capture():
     c_model = keras.models.load_model('./colors_trained')
 
     # Settings
-    cap = cv2.VideoCapture(constants.INTEGRATED_CAMERA)
+    cap = cv2.VideoCapture(0)
     cap.set(3, constants.FRAME_WIDTH)
     cap.set(4, constants.FRAME_HEIGHT)
     cap.set(10, constants.BRIGHTNESS)
@@ -70,12 +70,10 @@ def capture():
 
     while True:
         time_elapsed = time.time() - prev
-
         success, img = cap.read()
 
         if time_elapsed > 1. / constants.FRAME_RATE:
             prev = time.time()
-
             imgResult = img.copy()
             imgResult2 = img.copy()
 
@@ -98,28 +96,11 @@ def capture():
                 cropped_images)
 
             # show the overall image
-            cv2.imshow('Result', stackImages(0.85, [imgResult, thresh]))
             if value_color_mapping:
-                value_im = value_color_mapping[0][0]/255
-                color_im = value_color_mapping[0][1]/255
+                prediction = recognize(value_color_mapping, v_model, c_model)
+                show_text(prediction, four_corners_set, imgResult)
 
-                value_im = cv2.resize(value_im, (140, 140))
-                color_im = cv2.resize(color_im, (140, 140))
-
-                value_im = value_im.reshape((1, 140, 140, 1))
-                color_im = color_im.reshape((1, 140, 140, 1))
-
-                value_result = v_model.predict(value_im)
-                color_result = c_model.predict(color_im)
-
-                value = to_values[np.argmax(value_result)]
-                color = to_colors[np.argmax(color_result)]
-
-                print("WYKRYTO")
-                print('VALUE: ', value, 'COLOR:', color)
-
-                cv2.imshow('Number', value_color_mapping[0][0])
-                cv2.imshow('Color', value_color_mapping[0][1])
+            cv2.imshow('Result', stackImages(0.85, [imgResult, thresh]))
 
         wait = cv2.waitKey(1)
         if wait & 0xFF == ord('q'):
