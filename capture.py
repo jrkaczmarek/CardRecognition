@@ -6,8 +6,35 @@ from helper import stackImages
 from tensorflow import keras
 import numpy as np
 
-to_values = {0: '2', 1: '3', 2: '4', 3: '5', 4: '6', 5: '7', 6: '8', 7: '9', 8: '10', 9: 'a', 10: 'j', 11: 'k', 12: 'q'}
-to_colors = {0: 'club', 1: 'diamond', 2: 'heart', 3: 'spade'}
+
+
+
+def recognize(value_color_mapping, v_model, c_model, show=False):
+    pred = []
+    for i in range(len(value_color_mapping)):
+        # Gray scale
+        value_im = value_color_mapping[i][0] / 255
+        color_im = value_color_mapping[i][1] / 255
+
+        # Resize to 140x140
+        value_im = cv2.resize(value_im, (140, 140))
+        color_im = cv2.resize(color_im, (140, 140))
+
+        # Reshape
+        value_im = value_im.reshape((1, 140, 140, 1))
+        color_im = color_im.reshape((1, 140, 140, 1))
+
+        # Predict using value and color model
+        value_result = v_model.predict(value_im)
+        color_result = c_model.predict(color_im)
+
+        # Translate 
+        value = constants.TO_VALUES[np.argmax(value_result)]
+        color = constants.TO_COLORS[np.argmax(color_result)]
+
+        pred.append(f'VALUE: {value}\nCOLOR: {color}')
+
+    return pred
 
 def capture():
     # loading neural network
