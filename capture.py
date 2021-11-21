@@ -2,11 +2,10 @@ import cv2
 import time
 import preprocess
 import constants
-from helper import stackImages
-from tensorflow import keras
 import numpy as np
 
-
+from helper import stackImages
+from tensorflow import keras
 
 
 def recognize(value_color_mapping, v_model, c_model, show=False):

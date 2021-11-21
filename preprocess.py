@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from helper import contrast, stackImages, fill
+from helper import contrast, fill
 
 
 def prepare(image):
@@ -223,15 +223,3 @@ def get_data(image, size=140):
     value, color = fill(final[0][0], size), fill(final[0][1], size)
 
     return value, color
-
-
-# TESTING
-if __name__ == '__main__':
-    img = cv2.imread('sample.jpg')
-    value, color = get_data(img)
-
-    cv2.imshow("value", value)
-    cv2.imshow("color", color)
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
