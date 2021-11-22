@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import trace
 import cv2
 import time
 import preprocess
@@ -99,7 +100,7 @@ def capture():
                 prediction = recognize(value_color_mapping, v_model, c_model)
                 show_text(prediction, four_corners_set, imgResult)
 
-            cv2.imshow('Result', stackImages(0.85, [imgResult, thresh]))
+            cv2.imshow('Result', imgResult)
 
         wait = cv2.waitKey(1)
         if wait & 0xFF == ord('q'):
