@@ -2,15 +2,52 @@
 
 Projekt realizowany na przedmiot Komunikacja Człowiek-Komputer.
 
-Autorzy:
-* Jakub Kaczmarek
-* Andrzej Kapczyński
+Authors:
+* [Jakub Kaczmarek](https://github.com/kaczmaro)
+* [Andrzej Kapczyński](https://github.com/Endrju00)
 
-- [x] Preprocessing zdjęć
-- [x] Stworzenie zbioru danych
-- [x] Sieć neuronowa dla wartości kart
-- [x] Sieć neuronowa dla kolorów kart
-- [x] Rozpoznanie wartości i koloru dla karty ze zdjęcia
-- [x] (Opcjonalnie) Odczytywanie obrazu z kamerki
-- [x] (Opcjonalnie) Wykrywanie wartości i koloru z obrazu z kamerki
-- [x] (Opcjonalnie) Rozpoznanie wartości i koloru obrazu z kamerki
+## Table of contents
+* [General info](#general-info)
+* [Quick setup](#quick-setup)
+* [Technologies](#technologies)
+* [Screenshots](#screenshots)
+
+## General info
+The application recognizes cards on a uniform background.
+## Quick setup
+
+1) Create virtual environment
+
+    ```
+    python -m venv venv
+    ```
+    On linux:
+    ```
+    source venv/bin/activate
+    ```
+    On windows (cmd):
+    ```
+    venv\Scripts\activate.bat
+    ```
+2) Install prerequisites
+   ```
+   pip install -r requirements.txt
+   ```
+3) To use a camera run capture.py
+   ```
+   python capture.py
+   ```
+4) To test an app on images run test.py
+   ```
+   python test.py
+   ```
+   
+## Technologies
+Project is created with:
+* Python
+* OpenCV
+* Tensorflow
+
+## Screenshots
+![](results/1.jpg)
+![](results/18.jpg)
